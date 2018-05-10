@@ -68,9 +68,9 @@ export class FileUploadComponent implements OnInit {
   readUrl(event: any, file: File) {
     const reader = new FileReader();
     reader.onload = function(e: any) {
+      document.getElementById('closeBtn').removeAttribute('hidden');
       document.getElementById('thumbnail').removeAttribute('hidden');
       document.getElementById('thumbnail').setAttribute('src', e.target.result);
-      // console.log(e.target.result);
     };
     reader.readAsDataURL(file);
   }
