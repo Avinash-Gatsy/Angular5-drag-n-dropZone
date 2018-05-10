@@ -7,5 +7,11 @@ export const environment = {
   production: false,
   firebase: {
     // Add your firebase config here.
+    apiKey: 'AIzaSyAet81GzCmcml4QZpT6qaIY_OQhjMFSBCk',
+    authDomain: 'angular-fileupload.firebaseapp.com',
+    databaseURL: 'https://angular-fileupload.firebaseio.com',
+    projectId: 'angular-fileupload',
+    storageBucket: 'angular-fileupload.appspot.com',
+    messagingSenderId: '769626972540'
   }
 };

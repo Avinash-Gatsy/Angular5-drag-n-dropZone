@@ -14,7 +14,7 @@ export class DropZoneDirective {
   onDrop($event) {
     // prevent the default behavior else the browser will open a new tab
     $event.preventDefault();
-    this.dropped.emit($event.dataTransfer.files);
+    this.dropped.emit($event);
     this.hovered.emit(false);
   }
 

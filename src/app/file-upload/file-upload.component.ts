@@ -29,9 +29,15 @@ export class FileUploadComponent implements OnInit {
   toggleHover(event: boolean) {
     this.isHovering = event;
   }
-  startUpload(event: FileList) {
+  startUpload(event: any) {
+    console.log(event);
+    let file: File;
     // the file object
-    const file = event.item(0);
+    if (event.type === 'drop') {
+      file = event.dataTransfer.files.item(0);
+    } else {
+      file = event.target.files.item(0);
+    }
 
     // client side validation for formats
     if (file.type.split('/')[0] !== 'image') {
@@ -59,12 +65,12 @@ export class FileUploadComponent implements OnInit {
   isActive(snapshot) {
     return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
   }
-  readUrl(event: any) {
+  readUrl(event: any, file: File) {
     const reader = new FileReader();
     reader.onload = function(e: any) {
       document.getElementById('thumbnail').setAttribute('src', e.target.result);
-      console.log(e.target.result);
+      // console.log(e.target.result);
     };
-    reader.readAsDataURL(event.target.files[0]);
+    reader.readAsDataURL(file);
   }
 }
