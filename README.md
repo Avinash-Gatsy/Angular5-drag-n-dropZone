@@ -7,13 +7,13 @@ This is yet to be enhanced to handle multiple files and multiple file types.
 
 If you want to upload the image file to Firebase
 
-Configure the your firebase account details in src/environments/environment.ts by creating a project in firebase and choosing - Add firebase to web to get the config values
-    apiKey: "<key>",
-    authDomain: "<project-name>.firebaseapp.com",
-    databaseURL: "https://<project-name>firebaseio.com",
-    projectId: "<project-name>",
-    storageBucket: "<project-name>.appspot.com",
-    messagingSenderId: "<id>"
+Configure the your firebase account details in src/environments/environment.ts by creating a project in firebase and choosing - Add firebase to web to get the config values : 
+    `apiKey: "<key>",`
+    `authDomain: "<project-name>.firebaseapp.com",`
+    `databaseURL: "https://<project-name>firebaseio.com",`
+    `projectId: "<project-name>",`
+    `storageBucket: "<project-name>.appspot.com",`
+    `messagingSenderId: "<id>"`
 
 ## Development server
 
