@@ -19,3 +19,7 @@ Configure the your firebase account details in src/environments/environment.ts b
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Screenshot
+
+<img width="1076" alt="screen shot 2018-05-12 at 8 56 22 am" src="https://user-images.githubusercontent.com/22128448/39953160-4d311334-55c3-11e8-8d3e-e7eb64055385.png">
