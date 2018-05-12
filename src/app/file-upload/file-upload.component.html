@@ -2,14 +2,14 @@
   <div class="dropzone"
     appDropZone 
     (hovered)="toggleHover($event)"
-    (dropped)="readUrl($event,$event.dataTransfer.files[0]); startUpload($event)"
+    (dropped)="startUpload($event)"
     [class.hovering]="isHovering">
 
     <h3>Drop Zone</h3>
     <p>Drag and Drop a file</p>
     <div class="file">
         <label class="file-label">
-            <input class="file-input" type="file" (change)="readUrl($event,$event.target.files[0]); startUpload($event)">
+            <input class="file-input" type="file" (change)="startUpload($event)">
             <span class="file-cta">
                 <span class="file-icon">
                   <i class="fa fa-upload"></i>
@@ -21,10 +21,10 @@
         </label>
     </div>
 </div>
-<div class="media-body">
+<div class="row media-body" *ngFor="let file of filesArr; let i = index">
   <div class="img-wrap">
-    <span class="close" id="closeBtn" hidden>&times;</span>
-    <img id="thumbnail" src="" hidden>
+    <span class="close" id="closeBtn{{i}}" hidden>&times;</span>
+    <img id="thumbnail{{i}}" src="" hidden>
   </div>
   <div *ngIf="percentage | async as pct">
     <progress class="progress is-info" 

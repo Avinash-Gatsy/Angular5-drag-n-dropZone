@@ -28,8 +28,10 @@ img {
     width: 250px
 }
 .media-body {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
+    display: inline-block;
+    padding: 10px
 }
 .img-wrap{
     position: relative;

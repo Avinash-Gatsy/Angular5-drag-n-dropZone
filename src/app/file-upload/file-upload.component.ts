@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent implements OnInit {
+  filesArr: any[];
   // main task of uploading
   task: AngularFireUploadTask;
 
@@ -30,48 +31,55 @@ export class FileUploadComponent implements OnInit {
     this.isHovering = event;
   }
   startUpload(event: any) {
-    console.log(event);
-    let file: File;
     // the file object
     if (event.type === 'drop') {
-      file = event.dataTransfer.files.item(0);
+      this.filesArr = this.objToArr(event.dataTransfer.files);
     } else {
-      file = event.target.files.item(0);
+      this.filesArr = this.objToArr(event.target.files);
     }
+    this.filesArr.forEach((file, index) => {
+      this.readUrl(event, file, index);
+      // client side validation for formats
+      if (file.type.split('/')[0] !== 'image') {
+        console.log('unsupported file type...');
+        return;
+      }
 
-    // client side validation for formats
-    if (file.type.split('/')[0] !== 'image') {
-      console.log('unsupported file type...');
-      return;
-    }
+      // the storage path
+      const path = `test/${new Date().getTime()}_${file.name}`;
 
-    // the storage path
-    const path = `test/${new Date().getTime()}_${file.name}`;
+      // optional metadata
+      const customMetadata = { app: 'Angular Drag n Drop FileUpload'};
 
-    // optional metadata
-    const customMetadata = { app: 'Angular Drag n Drop FileUpload'};
+      // main task to upload
+      this.task = this.storage.upload(path, file, { customMetadata });
 
-    // main task to upload
-    this.task = this.storage.upload(path, file, { customMetadata });
+      // progress monitoring
+      this.percentage = this.task.percentageChanges();
+      this.snapshot = this.task.snapshotChanges();
 
-    // progress monitoring
-    this.percentage = this.task.percentageChanges();
-    this.snapshot = this.task.snapshotChanges();
+      // download URL
+      this.downloadURL = this.task.downloadURL();
+    });
 
-    // download URL
-    this.downloadURL = this.task.downloadURL();
   }
   // determine if the upload task is active so that we can toggle between the paused and resumed states
   isActive(snapshot) {
     return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
   }
-  readUrl(event: any, file: File) {
+  readUrl(event: any, file: File, index) {
     const reader = new FileReader();
     reader.onload = function(e: any) {
-      document.getElementById('closeBtn').removeAttribute('hidden');
-      document.getElementById('thumbnail').removeAttribute('hidden');
-      document.getElementById('thumbnail').setAttribute('src', e.target.result);
+      document.getElementById(`closeBtn${index}`).removeAttribute('hidden');
+      document.getElementById(`thumbnail${index}`).removeAttribute('hidden');
+      document.getElementById(`thumbnail${index}`).setAttribute('src', e.target.result);
     };
     reader.readAsDataURL(file);
+  }
+  objToArr(filesObj) {
+    return Object.keys(filesObj).map(function(i) {
+      const file = filesObj[i];
+      return file;
+    });
   }
 }
