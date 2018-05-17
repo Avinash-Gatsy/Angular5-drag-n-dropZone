@@ -22,4 +22,5 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Screenshot
 
-<img width="1076" alt="screen shot 2018-05-12 at 8 56 22 am" src="https://user-images.githubusercontent.com/22128448/39953160-4d311334-55c3-11e8-8d3e-e7eb64055385.png">
+<img width="1179" alt="screen shot 2018-05-18 at 12 56 53 am" src="https://user-images.githubusercontent.com/22128448/40199225-6fba7bf8-5a36-11e8-993b-72358e044f14.png">
+
