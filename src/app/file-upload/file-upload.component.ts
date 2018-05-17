@@ -30,36 +30,25 @@ export class FileUploadComponent implements OnInit {
   toggleHover(event: boolean) {
     this.isHovering = event;
   }
-  startUpload(event: any) {
+  startUpload(event: any, filesArr) {
     // the file object
-    if (event.type === 'drop') {
-      this.filesArr = this.objToArr(event.dataTransfer.files);
+    if (this.filesArr === [] || this.filesArr === undefined) {
+      if (event.type === 'drop') {
+        console.log(this.objToArr(event.dataTransfer.files));
+        this.filesArr = this.objToArr(event.dataTransfer.files);
+      } else {
+        this.filesArr = this.objToArr(event.target.files);
+      }
     } else {
-      this.filesArr = this.objToArr(event.target.files);
+      if (event.type === 'drop') {
+        console.log(this.objToArr(event.dataTransfer.files));
+        this.filesArr = this.filesArr.concat(this.objToArr(event.dataTransfer.files));
+      } else {
+        this.filesArr = this.filesArr.concat(this.objToArr(event.target.files));
+      }
     }
     this.filesArr.forEach((file, index) => {
       this.readUrl(event, file, index);
-      // client side validation for formats
-      if (file.type.split('/')[0] !== 'image') {
-        console.log('unsupported file type...');
-        return;
-      }
-
-      // the storage path
-      const path = `test/${new Date().getTime()}_${file.name}`;
-
-      // optional metadata
-      const customMetadata = { app: 'Angular Drag n Drop FileUpload'};
-
-      // main task to upload
-      this.task = this.storage.upload(path, file, { customMetadata });
-
-      // progress monitoring
-      this.percentage = this.task.percentageChanges();
-      this.snapshot = this.task.snapshotChanges();
-
-      // download URL
-      this.downloadURL = this.task.downloadURL();
     });
 
   }
@@ -81,5 +70,34 @@ export class FileUploadComponent implements OnInit {
       const file = filesObj[i];
       return file;
     });
+  }
+  filesUpload(filesArr) {
+    this.filesArr.forEach((file, index) => {
+      // client side validation for formats
+      // if (file.type.split('/')[0] !== 'image') {
+      //   console.log('unsupported file type...');
+      //   return;
+      // }
+
+      // the storage path
+      const path = `test/${new Date().getTime()}_${file.name}`;
+
+      // optional metadata
+      const customMetadata = { app: 'Angular Drag n Drop FileUpload'};
+
+      // main task to upload
+      this.task = this.storage.upload(path, file, { customMetadata });
+
+      // progress monitoring
+      this.percentage = this.task.percentageChanges();
+      this.snapshot = this.task.snapshotChanges();
+
+      // download URL
+      this.downloadURL = this.task.downloadURL();
+    });
+  }
+  removeFile(i) {
+    document.getElementById(`file${i}`).closest('.media-body').remove();
+    this.filesArr.splice(i, 1);
   }
 }
